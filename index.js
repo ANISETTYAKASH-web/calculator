@@ -25,31 +25,40 @@ const keyContent = key.textContent;
 const displayedNum = display.textContent;
 if(!action)
   {
-    if(displayedNum==='0') display.textContent=keyContent;
-    else display.textContent = displayedNum+keyContent;
+    if(displayedNum==='0'||calculator.dataset.previousKeyType==='operator') display.textContent=keyContent;
+    else display.textContent = display.textContent+keyContent;
+    calculator.dataset.previousKeyType = 'number';
   }
-  if(action==='decimal') display.textContent=displayedNum+'.';
+  if(action==='decimal') {
+    // display.textContent=displayedNum+'.';
+    if (!displayedNum.includes('.')) {
+      display.textContent += '.'; // Append decimal point
+  }
+  }
   if(action==='add'||action==='sub'||action==='mul'||action==='divide')
     {
       calculator.dataset.firstValue=displayedNum;
       calculator.dataset.operator=action;
       calculator.dataset.previousKeyType='operator';
     }
-    const previousKeyType = calculator.dataset.previousKeyType;
-    if(!action)
-    {
-      if(displayedNum==='0'||previousKeyType==='operator') display.textContent = keyContent
-      else display.textContent = displayedNum+keyContent;
-    }
+    // const previousKeyType = calculator.dataset.previousKeyType;
+   
     if(action==='equal')
     {
       const firstValue = calculator.dataset.firstValue;
       const operator = calculator.dataset.operator;
       const secondValue = displayedNum
       display.textContent = calculate(firstValue,operator,secondValue);
+      calculator.dataset.previousKeyType = 'equal';
+      calculator.dataset.firstValue = ''; // Reset for next calculation
+      calculator.dataset.operator = ''; // Reset for next calculation
     }
-    if(action==='clear') display.textContent = '0';
-    
+    if(action==='clear') {
+      display.textContent = '0';
+      calculator.dataset.firstValue='0';
+      calculator.dataset.operator='';
+      calculator.dataset.previousKeyType='';
+    }
 }});
 function calculate(num1,op,num2)
 {
