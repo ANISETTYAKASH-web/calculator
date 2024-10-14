@@ -29,18 +29,24 @@ if(!action)
     else display.textContent = display.textContent+keyContent;
     calculator.dataset.previousKeyType = 'number';
   }
+ 
   if(action==='decimal') {
     // display.textContent=displayedNum+'.';
-    if (!displayedNum.includes('.')) {
-      display.textContent += '.'; // Append decimal point
-  }
+    if(calculator.dataset.previousKeyType==='operator') display.textContent='0.';
+
+    else if (!displayedNum.includes('.')) {
+      display.textContent =displayedNum + '.'; // Append decimal point
+    }
+    calculator.dataset.previousKeyType = 'decimal';
   }
   if(action==='add'||action==='sub'||action==='mul'||action==='divide')
     {
+      
       calculator.dataset.firstValue=displayedNum;
       calculator.dataset.operator=action;
       calculator.dataset.previousKeyType='operator';
     }
+  
     // const previousKeyType = calculator.dataset.previousKeyType;
    
     if(action==='equal')
@@ -68,5 +74,6 @@ function calculate(num1,op,num2)
   if(op==='mul') result=parseFloat(num1)*parseFloat(num2);
   if(op==='divide') result=parseFloat(num1)/parseFloat(num2);
   return result;
+  //pretty cool ha
 }
 
