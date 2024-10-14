@@ -48,6 +48,7 @@ if(!action)
       const secondValue = displayedNum
       display.textContent = calculate(firstValue,operator,secondValue);
     }
+    if(action==='clear') display.textContent = '0';
     
 }});
 function calculate(num1,op,num2)
